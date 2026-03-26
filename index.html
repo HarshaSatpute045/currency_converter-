@@ -1,71 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Converter</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Converter</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
 </head>
+
 <body>
-    
+
 <div class="container">
-   
+
 <h2>Currency Converter</h2>
-<form>
-    <div class="amount">
-        <p>Enter Amount:</p>
-        <input value="100" type="text">
-    </div>
+<div class="favorites">
+<p>⭐ Favourite</p>
 
+<button class="fav" data-curr="USD">USD</button>
+<button class="fav" data-curr="INR">INR</button>
+<button class="fav" data-curr="EUR">EUR</button>
+<button class="fav" data-curr="GBP">GBP</button>
 
-    <div class="dropdown">
-
-        
-        <div class="from">
-            <p>From</p>
-            <div class="select-container">
-                <img src="https://flagsapi.com/US/flat/64.png" alt="">
-                <select name="from" >
-                <!-- <option value="USD">USD</option>
-                       <option value="INR">INR</option>
-                           <option value="EUR">EUR</option>
-                               <option value="AUD">AUD</option> -->
-                       </select>
-            </div>
-
-
-
-
-
-        </div>
-
-
-
-        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-        <div class="to">
-            <p>To</p>
-            <div class="select-container">
-                 <img src="https://flagsapi.com/IN/flat/64.png" alt="">
-                <select name="to" >
-                <!-- <option value="INR">INR</option>
-                       <option value="USD">USD</option>
-                           <option value="EUR">EUR</option>
-                               <option value="AUD">AUD</option> -->
-                       </select>
-            </div>
 </div>
-    </div>
-    <div class="msg">
-        1USD=80 INR
-    </div>
-    <button>Get Exchange Rate</button>
+<form>
+
+<div class="amount">
+<p>Enter Amount</p>
+<input value="1" type="number">
+</div>
+
+
+<div class="search-box">
+<input type="text" id="searchCurrency" placeholder="🔍 Search currency...">
+</div>
+
+
+<div class="dropdown">
+
+<div class="from">
+<p>From</p>
+
+<div class="select-container">
+<img src="https://flagsapi.com/US/flat/64.png">
+<select name="from"></select>
+</div>
+
+</div>
+<i class="fa-solid fa-right-left"></i>
+<!-- <i class="fa-solid fa-arrow-right-arrow-left"></i> -->
+
+<div class="to">
+<p>To</p>
+
+<div class="select-container">
+<img src="https://flagsapi.com/IN/flat/64.png">
+<select name="to"></select>
+</div>
+
+</div>
+
+</div>
+
+<div class="msg">
+1 USD = 80 INR
+</div>
+
+<!-- chart -->
+<div class="chart-container">
+<canvas id="rateChart"></canvas>
+</div>
+
+<button>Get Exchange Rate</button>
+
 </form>
 
 </div>
-<button id="mode">Dark Mode</button>
+<div class="compare-chart">
+<canvas id="compareChart"></canvas>
+</div>
 
-<script src="./codes.js"></script>
-    <script src="./script.js"></script>
+<div class="history-chart">
+<canvas id="historyChart"></canvas>
+</div>
+
+<div class="topCurrencies">
+
+
+
+</table>
+
+</div>
+
+<div class="heatmap">
+
+<h3>🔥 Currency Heatmap</h3>
+
+<div id="heatmapGrid"></div>
+
+</div>
+<!-- <button id="downloadReport">📄 Download Report</button> -->
+<button id="mode">🌙 Dark Mode</button>
+
+<script src="codes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
