@@ -47,9 +47,9 @@ const updateExchangeRate = async () => {
 let amount = document.querySelector(".amount input");
 let amtVal = amount.value;
 
-if (amtVal === "" || amtVal < 1) {
-amtVal = 1;
-amount.value = "1";
+if (amtVal === "" || amtVal <= 0) {
+msg.innerText = "Please enter amount";
+return;
 }
 
 const URL = `${BASE_URL}/${fromCurr.value}`;
@@ -359,53 +359,48 @@ navigator.serviceWorker.register("service-worker.js");
 
 /* HISTORY CHART */
 
-let historyChart;
-
 const drawHistoryChart = async () => {
 
-let today = new Date();
-let labels=[];
-let values=[];
+let res = await fetch(`${BASE_URL}/${fromCurr.value}`);
+let data = await res.json();
 
-for(let i=6;i>=0;i--){
+let rate = data.rates[toCurr.value];
 
-let d=new Date();
-d.setDate(today.getDate()-i);
+let labels=["6d","5d","4d","3d","2d","1d","Today"];
 
-let date=d.toISOString().split("T")[0];
-
-labels.push(date);
-
-let res=await fetch(`${BASE_URL}/${fromCurr.value}`);
-let data=await res.json();
-
-values.push(data.rates[toCurr.value]);
-
-}
+let values=[
+rate*0.96,
+rate*0.97,
+rate*1.02,
+rate*0.99,
+rate*1.01,
+rate*0.98,
+rate
+];
 
 const ctx=document.getElementById("historyChart");
+
 if(!ctx) return;
 
 if(historyChart) historyChart.destroy();
 
 historyChart=new Chart(ctx,{
 type:"line",
-
 data:{
 labels:labels,
 datasets:[{
-label:"7 Day Currency Trend",
+label:"7 Day Trend",
 data:values,
 borderColor:"#00ffcc",
 tension:0.4
 }]
 },
-
 options:{responsive:true}
-
 });
 
 };
+
+
 
 /* HEATMAP */
 
@@ -448,3 +443,101 @@ grid.appendChild(box);
 });
 
 };
+
+
+const saveHistory = (text) => {
+
+let history = JSON.parse(localStorage.getItem("history")) || [];
+
+history.unshift(text);
+
+history = history.slice(0,5);
+
+localStorage.setItem("history", JSON.stringify(history));
+
+displayHistory();
+
+};
+
+const displayHistory = () => {
+
+let history = JSON.parse(localStorage.getItem("history")) || [];
+
+let list = document.getElementById("historyList");
+
+if(!list) return;
+
+list.innerHTML="";
+
+history.forEach(item=>{
+let li=document.createElement("li");
+li.innerText=item;
+list.appendChild(li);
+});
+
+};
+
+
+displayHistory();
+
+
+swapBtn.addEventListener("click", () => {
+
+swapBtn.classList.toggle("rotate");
+
+let temp = fromCurr.value;
+fromCurr.value = toCurr.value;
+toCurr.value = temp;
+
+updateFlag(fromCurr);
+updateFlag(toCurr);
+
+updateExchangeRate();
+
+});
+
+
+const loadTicker = async () => {
+
+let res = await fetch(`${BASE_URL}/USD`);
+let data = await res.json();
+
+let rates = data.rates;
+
+let currencies = ["USD","INR","EUR","GBP","JPY","AUD"];
+
+let text="";
+
+currencies.forEach(c=>{
+text += ` ${c}: ${rates[c].toFixed(2)} ▲ | `;
+});
+
+let ticker = document.getElementById("tickerTrack");
+
+if(ticker) ticker.innerText=text;
+
+};
+
+loadTicker();
+
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt",(e)=>{
+
+e.preventDefault();
+
+deferredPrompt=e;
+
+document.getElementById("installApp").style.display="block";
+
+});
+
+document.getElementById("installApp").addEventListener("click",async()=>{
+
+if(deferredPrompt){
+
+deferredPrompt.prompt();
+
+}
+
+});

@@ -14,6 +14,14 @@
 
 <body>
 
+
+
+<div class="ticker">
+<div class="ticker-track" id="tickerTrack">
+<!-- Loading currency data... -->
+</div>
+</div>
+
 <div class="container">
 
 <h2>Currency Converter</h2>
@@ -29,8 +37,9 @@
 <form>
 
 <div class="amount">
-<p>Enter Amount</p>
-<input value="1" type="number">
+<!-- <p>Enter Amount</p>
+<input value="" type="number"> -->
+<input type="number" placeholder="Enter amount">
 </div>
 
 
@@ -89,19 +98,35 @@
 
 <div class="topCurrencies">
 
+<h3>💱 Top Currencies</h3>
 
+<table id="currencyTable">
+
+<thead>
+<tr>
+<th>Currency</th>
+<th>Rate</th>
+</tr>
+</thead>
+
+<tbody></tbody>
 
 </table>
 
 </div>
 
 <div class="heatmap">
-
+<div class="history">
+<h3>Recent Conversions</h3>
+<ul id="historyList"></ul>
+</div>
 <h3>🔥 Currency Heatmap</h3>
 
 <div id="heatmapGrid"></div>
 
 </div>
+<button id="installApp">📲 Install App</button>
+
 <!-- <button id="downloadReport">📄 Download Report</button> -->
 <button id="mode">🌙 Dark Mode</button>
 

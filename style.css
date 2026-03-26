@@ -9,7 +9,7 @@ body{
 display:flex;
 justify-content:center;
 align-items:center;
-min-height:100vh;
+min-height:80vh;
 background:linear-gradient(135deg,#667eea,#764ba2);
 }
 
@@ -20,10 +20,11 @@ background:rgba(255,255,255,0.15);
 backdrop-filter:blur(10px);
 padding:2rem;
 border-radius:1rem;
-width:100%;
-max-width:380px;
+width:0%;
+max-width:10px;
 color:white;
 box-shadow:0 10px 25px rgba(0,0,0,0.3);
+
 }
 
 form{
@@ -37,6 +38,7 @@ width:100%;
 border:none;
 outline:none;
 border-radius:0.5rem;
+
 }
 
 form input{
@@ -279,58 +281,34 @@ background:#dc2626;
 
 /* ---------- GENERAL FLEX FIX ---------- */
 
+/* ---------------- RESPONSIVE DESIGN ---------------- */
+
+/* container responsive */
+
 .container{
-max-width:900px;
-width:90%;
+width:150%;
+max-width:400px;
 margin:auto;
 }
 
-/* ---------- DROPDOWN ---------- */
+/* charts responsive */
 
-.dropdown{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-flex-wrap:wrap;
-}
-
-/* ---------- SEARCH ---------- */
-
-.search-box input{
-width:100%;
+.chart-container,
+.compare-chart,
+.history-chart{
+margin-top:20px;
+background:rgba(255,255,255,0.15);
 padding:10px;
-}
-
-/* ---------- FAVORITES ---------- */
-
-.favorites{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-}
-
-/* ---------- CHART ---------- */
-
-.chart-container{
+border-radius:10px;
 width:100%;
-overflow-x:auto;
 }
 
-/* ---------- TABLE ---------- */
-
-.topCurrencies table{
-width:100%;
-border-collapse:collapse;
+canvas{
+width:100% !important;
+height:auto !important;
 }
 
-.topCurrencies th,
-.topCurrencies td{
-padding:8px;
-text-align:center;
-}
-
-/* ---------- HEATMAP ---------- */
+/* heatmap responsive */
 
 #heatmapGrid{
 display:grid;
@@ -338,37 +316,70 @@ grid-template-columns:repeat(4,1fr);
 gap:10px;
 }
 
-/* ---------- MOBILE ---------- */
+/* tablet */
 
-@media (max-width:768px){
+@media (max-width:900px){
 
 .container{
-width:95%;
-padding:10px;
+max-width:500px;
+}
+
+#heatmapGrid{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
+
+/* mobile */
+
+@media (max-width:600px){
+
+body{
+padding:20px;
+}
+
+.container{
+max-width:100%;
+padding:1.5rem;
 }
 
 h2{
-font-size:22px;
 text-align:center;
+font-size:22px;
 }
 
 /* dropdown vertical */
 
 .dropdown{
 flex-direction:column;
+gap:15px;
 align-items:stretch;
 }
 
-/* flag container */
+.dropdown i{
+transform:rotate(90deg);
+align-self:center;
+}
+
+/* select container full width */
 
 .select-container{
 width:100%;
+justify-content:space-between;
 }
 
 /* buttons */
 
-button{
+form button{
 width:100%;
+}
+
+/* favorites */
+
+.favorites{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
 }
 
 /* heatmap */
@@ -377,43 +388,199 @@ width:100%;
 grid-template-columns:repeat(2,1fr);
 }
 
-/* chart */
-
-canvas{
-width:100% !important;
-height:auto !important;
 }
 
-/* table scroll */
+/* very small phone */
 
-.topCurrencies{
-overflow-x:auto;
-}
-
-}
-
-/* ---------- SMALL MOBILE ---------- */
-
-@media (max-width:480px){
-
-h2{
-font-size:20px;
-}
-
-.amount input{
-width:100%;
-}
+@media (max-width:400px){
 
 #heatmapGrid{
 grid-template-columns:1fr;
 }
 
-.favorites{
-justify-content:center;
+.fav{
+flex:1;
 }
 
-button{
-font-size:14px;
+}
+body{
+padding:20px;
 }
 
+
+
+@media(max-width:768px){
+
+.container{
+width:95%;
+padding:15px;
+}
+
+.dropdown{
+flex-direction:column;
+gap:15px;
+}
+
+canvas{
+width:100%!important;
+height:auto!important;
+}
+
+#heatmapGrid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:400px){
+
+#heatmapGrid{
+grid-template-columns:1fr;
+}
+
+}
+
+
+.currency-dropdown{
+position:relative;
+margin-top:10px;
+}
+
+#currencySearch{
+width:100%;
+padding:8px;
+border-radius:8px;
+border:none;
+}
+
+#currencyList{
+list-style:none;
+max-height:200px;
+overflow-y:auto;
+background:white;
+color:black;
+border-radius:8px;
+}
+
+#currencyList li{
+padding:8px;
+cursor:pointer;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+#currencyList li:hover{
+background:#eee;
+}
+
+.amount input::placeholder{
+color:white;
+opacity:0.7;
+}
+
+.history{
+margin-top:20px;
+background:rgba(255,255,255,0.15);
+padding:10px;
+border-radius:10px;
+}
+
+#historyList{
+list-style:none;
+max-height:120px;
+overflow-y:auto;
+}
+
+#historyList li{
+padding:5px;
+border-bottom:1px solid rgba(255,255,255,0.3);
+}
+
+
+.rotate{
+transform:rotate(180deg);
+}
+table{
+width:100%;
+margin-top:10px;
+border-collapse:collapse;
+}
+
+th,td{
+padding:8px;
+text-align:center;
+}
+
+th{
+background:#ff6a00;
+}
+
+tr:nth-child(even){
+background:rgba(255,255,255,0.1);
+}
+table{
+width:100%;
+margin-top:10px;
+border-collapse:collapse;
+color:white;
+}
+
+th,td{
+padding:8px;
+text-align:center;
+}
+
+th{
+background:#ff6a00;
+}
+
+tr:nth-child(even){
+background:rgba(255,255,255,0.1);
+}
+
+
+.ticker{
+width:100%;
+overflow:hidden;
+background:black;
+color:#00ffcc;
+padding:8px 0;
+font-weight:bold;
+/* margin: -10px 0; */
+margin-top:40px;
+}
+
+.ticker-track{
+display:inline-block;
+white-space:nowrap;
+animation:tickerMove 20s linear infinite;
+}
+
+@keyframes tickerMove{
+0%{transform:translateX(100%)}
+100%{transform:translateX(-100%)}
+}
+
+#installApp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#16a34a;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.ticker-track{
+display:inline-block;
+white-space:nowrap;
+animation: scroll 15s linear infinite;
+}
+
+@keyframes scroll{
+0%{transform:translateX(100%);}
+100%{transform:translateX(-100%);}
 }
